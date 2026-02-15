@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "6f19a8f967ba44288d130dda",
+    "email": "test@test.com",
+    "password": "$2a$10$19spifJPOIBTg84.9SP50uoMIObwxxYaeyIM2Iajl7.I.y0fL8aMS",
+    "createdAt": "2026-02-14T12:32:12.323Z"
+  },
+  {
+    "_id": "97135360ab724ff98b16ab2e",
+    "email": "user2@test.com",
+    "password": "$2a$10$Z.3xPGCecjxpXTu7Hi0zmu31hNzluj2PCuiAvjojUyg/XIvmFJIta",
+    "createdAt": "2026-02-14T12:32:43.881Z"
+  },
+  {
+    "_id": "e15fbc2fa5624f02bd458a54",
+    "email": "ollew.hemmingsson@gmail.com",
+    "password": "$2a$10$xlFAc4mz5DGOhWsE5XJjeu1LiARJdNFP1lH90CVRRz2W663HjVpfK",
+    "createdAt": "2026-02-14T12:36:25.190Z"
+  }
+]

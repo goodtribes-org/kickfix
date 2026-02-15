@@ -1,0 +1,112 @@
+.find-job-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.find-job-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.find-job-sidebar h3 {
+  color: #1e3a5f;
+  margin-bottom: 1rem;
+}
+
+.find-job-sidebar label {
+  display: block;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.find-job-sidebar select,
+.find-job-sidebar input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.filter-btn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.7rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.filter-btn:hover {
+  background: #1e40af;
+}
+
+.find-job-main {
+  flex: 1;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.search-bar button {
+  padding: 0.7rem 1.5rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search-bar button:hover {
+  background: #1e40af;
+}
+
+.no-results {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+}
+
+.job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .find-job-container {
+    flex-direction: column;
+  }
+
+  .find-job-sidebar {
+    width: 100%;
+  }
+}

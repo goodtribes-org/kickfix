@@ -1,0 +1,237 @@
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-container h1 {
+  color: #1e3a5f;
+  margin-bottom: 0.3rem;
+}
+
+.profile-email {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.login-prompt {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.login-prompt .link {
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.profile-tabs button {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s;
+}
+
+.profile-tabs button.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+  font-weight: 600;
+}
+
+.profile-tabs button:hover {
+  color: #111827;
+}
+
+.tab-content {
+  min-height: 200px;
+}
+
+.empty-text {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 2rem;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.profile-job-card {
+  background: white;
+  padding: 1.2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-job-info h3 {
+  margin: 0 0 0.3rem;
+  color: #111827;
+}
+
+.profile-job-price {
+  font-weight: 600;
+  color: #2563eb;
+  margin: 0.3rem 0;
+}
+
+.profile-job-accepted {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-accepted {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.profile-job-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.complete-btn {
+  padding: 0.5rem 1rem;
+  background: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.complete-btn:hover {
+  background: #15803d;
+}
+
+.delete-btn {
+  padding: 0.5rem 1rem;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.message-btn {
+  padding: 0.5rem 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.message-btn:hover {
+  background: #1d4ed8;
+}
+
+.economy-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.economy-card {
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.economy-card.income {
+  background: #dcfce7;
+}
+
+.economy-card.expenses {
+  background: #fee2e2;
+}
+
+.economy-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.economy-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+}
+
+.stripe-placeholder {
+  text-align: center;
+  padding: 2rem;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 2px dashed #d1d5db;
+}
+
+.stripe-placeholder p {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.stripe-btn {
+  padding: 0.7rem 1.5rem;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

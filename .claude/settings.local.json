@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mongosh:*)",
+      "Bash(mongo --eval:*)",
+      "Bash(node:*)",
+      "Bash(wc:*)",
+      "Bash(tree:*)",
+      "Bash(npm install:*)",
+      "Bash(dir /s \"C:\\\\Users\\\\olleh\\\\HTML\\\\html 2\\\\work app\")",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(npm start)"
+    ]
+  }
+}

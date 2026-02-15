@@ -1,0 +1,29 @@
+.navbar {
+  background: #111827;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.nav-links span {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.nav-links span:hover {
+  text-decoration: underline;
+}
+
+.nav-links .logout-btn {
+  color: #ef4444;
+}
+
+.nav-links .logout-btn:hover {
+  color: #dc2626;
+}

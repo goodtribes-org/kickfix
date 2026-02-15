@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebFetch(domain:workapp-backend.onrender.com)",
+      "Bash(dir:*)",
+      "Bash(TOKEN1=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ZjE5YThmOTY3YmE0NDI4OGQxMzBkZGEiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NzEwNzIzMzgsImV4cCI6MTc3MTY3NzEzOH0.Q8FloKwzl90W3yX9mwoaILddw3wjqjW9UnmTA7KDNPc\":*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "f30cf60ae5a849b7a1f51b08",
+    "title": "Webbdesign",
+    "description": "Beh�ver hj�lp med design",
+    "price": 500,
+    "category": "design",
+    "type": "online",
+    "status": "accepted",
+    "createdBy": "6f19a8f967ba44288d130dda",
+    "acceptedBy": "97135360ab724ff98b16ab2e",
+    "image": null,
+    "location": null,
+    "createdAt": "2026-02-14T12:32:36.195Z"
+  },
+  {
+    "_id": "a4ed182467ec405a88012e71",
+    "title": "Testjobb",
+    "description": "Test med FormData",
+    "price": 200,
+    "category": "teknik",
+    "type": "irl",
+    "status": "accepted",
+    "createdBy": "6f19a8f967ba44288d130dda",
+    "acceptedBy": "e15fbc2fa5624f02bd458a54",
+    "image": null,
+    "location": {
+      "country": "Sverige",
+      "municipality": "Stockholm",
+      "city": "Stockholm"
+    },
+    "createdAt": "2026-02-14T12:33:16.517Z"
+  }
+]
