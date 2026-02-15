@@ -1,6 +1,6 @@
 frontend:
   image:
-    repository: ghcr.io/OWNER/kickfix/frontend
+    repository: ghcr.io/viodlar/kickfix/frontend
     tag: main
   replicaCount: 1
   service:
@@ -10,7 +10,7 @@ frontend:
 
 backend:
   image:
-    repository: ghcr.io/OWNER/kickfix/backend
+    repository: ghcr.io/viodlar/kickfix/backend
     tag: main
   replicaCount: 1
   service:
