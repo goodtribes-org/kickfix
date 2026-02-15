@@ -84,10 +84,10 @@ function ChatPage() {
           <p className="chat-empty">Inga meddelanden ännu. Skriv det första!</p>
         )}
         {messages.map((msg) => {
-          const isOwn = msg.sender._id === user.userId;
+          const isOwn = (msg.sender._id || msg.sender.id) === user.userId;
           return (
             <div
-              key={msg._id}
+              key={msg._id || msg.id}
               className={`chat-bubble ${isOwn ? "chat-bubble-own" : "chat-bubble-other"}`}
             >
               <span className="chat-sender">{msg.sender.email}</span>

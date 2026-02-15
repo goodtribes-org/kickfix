@@ -10,16 +10,16 @@ function JobCard({ job, onUpdate }) {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const isOwner = user && job.createdBy && user.userId === (job.createdBy._id || job.createdBy);
-  const isAcceptedByMe = job.status === "accepted" && job.acceptedBy && user && (job.acceptedBy._id || job.acceptedBy) === user.userId;
+  const isOwner = user && job.createdBy && user.userId === (job.createdBy.id || job.createdBy._id || job.createdBy);
+  const isAcceptedByMe = job.status === "accepted" && job.acceptedBy && user && (job.acceptedBy.id || job.acceptedBy._id || job.acceptedBy) === user.userId;
 
   async function handleAccept() {
     try {
-      await apiFetch(`/jobs/${job._id}/accept`, { method: "PUT" });
+      await apiFetch(`/jobs/${job._id || job.id}/accept`, { method: "PUT" });
       if (onUpdate) onUpdate();
       const goToChat = window.confirm("Jobbet accepterat! Vill du gå till chatten?");
       if (goToChat) {
-        navigate(`/meddelanden/${job._id}`);
+        navigate(`/meddelanden/${job._id || job.id}`);
       }
     } catch (err) {
       alert(err.message);
@@ -64,8 +64,8 @@ function JobCard({ job, onUpdate }) {
             ? job.description.substring(0, 120) + "..."
             : job.description}
         </p>
-        {job.type === "irl" && job.location && job.location.city && (
-          <p className="job-card-location">{job.location.city}</p>
+        {job.type === "irl" && job.locationCity && (
+          <p className="job-card-location">{job.locationCity}</p>
         )}
         <div className="job-card-footer">
           <span className="job-card-price">{job.price} SEK</span>
@@ -75,7 +75,7 @@ function JobCard({ job, onUpdate }) {
             </button>
           )}
           {isAcceptedByMe && (
-            <button className="accept-btn" onClick={() => navigate(`/meddelanden/${job._id}`)}>
+            <button className="accept-btn" onClick={() => navigate(`/meddelanden/${job._id || job.id}`)}>
               Meddelanden
             </button>
           )}

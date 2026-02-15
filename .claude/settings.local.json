@@ -10,7 +10,9 @@
       "Bash(dir /s \"C:\\\\Users\\\\olleh\\\\HTML\\\\html 2\\\\work app\")",
       "Bash(dir:*)",
       "Bash(findstr:*)",
-      "Bash(npm start)"
+      "Bash(npm start)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

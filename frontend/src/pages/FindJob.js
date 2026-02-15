@@ -129,7 +129,7 @@ function FindJob() {
           ) : (
             <div className="job-grid">
               {jobs.map((job) => (
-                <JobCard key={job._id} job={job} onUpdate={fetchJobs} />
+                <JobCard key={job._id || job.id} job={job} onUpdate={fetchJobs} />
               ))}
             </div>
           )}

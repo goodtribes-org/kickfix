@@ -51,7 +51,7 @@ function Profile() {
     try {
       await apiFetch(`/jobs/${jobId}/complete`, { method: "PUT" });
       setMyJobs((prev) =>
-        prev.map((j) => (j._id === jobId ? { ...j, status: "completed" } : j))
+        prev.map((j) => ((j._id || j.id) === jobId ? { ...j, status: "completed" } : j))
       );
     } catch (err) {
       alert(err.message);
@@ -62,7 +62,7 @@ function Profile() {
     if (!window.confirm("Vill du verkligen ta bort detta jobb?")) return;
     try {
       await apiFetch(`/jobs/${jobId}`, { method: "DELETE" });
-      setMyJobs((prev) => prev.filter((j) => j._id !== jobId));
+      setMyJobs((prev) => prev.filter((j) => (j._id || j.id) !== jobId));
     } catch (err) {
       alert(err.message);
     }
@@ -110,7 +110,7 @@ function Profile() {
             ) : (
               <div className="job-list">
                 {myJobs.map((job) => (
-                  <div key={job._id} className="profile-job-card">
+                  <div key={job._id || job.id} className="profile-job-card">
                     <div className="profile-job-info">
                       <h3>{job.title}</h3>
                       <span className={`status status-${job.status}`}>
@@ -128,13 +128,13 @@ function Profile() {
                         <>
                           <button
                             className="complete-btn"
-                            onClick={() => handleComplete(job._id)}
+                            onClick={() => handleComplete(job._id || job.id)}
                           >
                             Markera klart
                           </button>
                           <button
                             className="message-btn"
-                            onClick={() => navigate(`/meddelanden/${job._id}`)}
+                            onClick={() => navigate(`/meddelanden/${job._id || job.id}`)}
                           >
                             Meddelanden
                           </button>
@@ -143,7 +143,7 @@ function Profile() {
                       {job.status === "completed" && (
                         <button
                           className="message-btn"
-                          onClick={() => navigate(`/meddelanden/${job._id}`)}
+                          onClick={() => navigate(`/meddelanden/${job._id || job.id}`)}
                         >
                           Meddelanden
                         </button>
@@ -151,7 +151,7 @@ function Profile() {
                       {(job.status === "open" || job.status === "completed") && (
                         <button
                           className="delete-btn"
-                          onClick={() => handleDelete(job._id)}
+                          onClick={() => handleDelete(job._id || job.id)}
                         >
                           Ta bort
                         </button>
@@ -171,7 +171,7 @@ function Profile() {
             ) : (
               <div className="job-list">
                 {acceptedJobs.map((job) => (
-                  <div key={job._id} className="profile-job-card">
+                  <div key={job._id || job.id} className="profile-job-card">
                     <div className="profile-job-info">
                       <h3>{job.title}</h3>
                       <span className={`status status-${job.status}`}>
@@ -186,7 +186,7 @@ function Profile() {
                       {(job.status === "accepted" || job.status === "completed") && (
                         <button
                           className="message-btn"
-                          onClick={() => navigate(`/meddelanden/${job._id}`)}
+                          onClick={() => navigate(`/meddelanden/${job._id || job.id}`)}
                         >
                           Meddelanden
                         </button>
