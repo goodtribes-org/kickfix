@@ -6,7 +6,7 @@ frontend:
   service:
     port: 3000
   env:
-    REACT_APP_API_URL: "https://www.kickfix.se/api"
+    REACT_APP_API_URL: "https://api.kickfix.se/api"
 
 backend:
   image:
@@ -17,7 +17,7 @@ backend:
     port: 5000
   env:
     JWT_SECRET: ""
-    FRONTEND_URL: "https://www.kickfix.se"
+    FRONTEND_URL: "https://www.kickfix.se,https://kickfix.se"
     PORT: "5000"
   uploads:
     size: 1Gi
@@ -35,9 +35,10 @@ mongodb:
 ingress:
   enabled: true
   className: nginx
-  hosts:
+  frontendHosts:
     - www.kickfix.se
     - kickfix.se
+  backendHost: api.kickfix.se
   tls:
     enabled: true
     secretName: kickfix-tls

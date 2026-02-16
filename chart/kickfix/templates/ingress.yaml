@@ -12,30 +12,17 @@ spec:
   {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
-        {{- range .Values.ingress.hosts }}
+        {{- range .Values.ingress.frontendHosts }}
         - {{ . }}
         {{- end }}
+        - {{ .Values.ingress.backendHost }}
       secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
+    {{- range .Values.ingress.frontendHosts }}
     - host: {{ . }}
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $.Release.Name }}-backend
-                port:
-                  number: {{ $.Values.backend.service.port }}
-          - path: /uploads
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $.Release.Name }}-backend
-                port:
-                  number: {{ $.Values.backend.service.port }}
           - path: /
             pathType: Prefix
             backend:
@@ -44,4 +31,21 @@ spec:
                 port:
                   number: {{ $.Values.frontend.service.port }}
     {{- end }}
+    - host: {{ .Values.ingress.backendHost }}
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-backend
+                port:
+                  number: {{ .Values.backend.service.port }}
+          - path: /uploads
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-backend
+                port:
+                  number: {{ .Values.backend.service.port }}
 {{- end }}

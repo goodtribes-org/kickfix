@@ -21,7 +21,7 @@ spec:
             - containerPort: {{ .Values.backend.service.port }}
           env:
             - name: DATABASE_URL
-              value: "mongodb://{{ .Release.Name }}-mongodb:27017/workapp"
+              value: "mongodb://{{ .Release.Name }}-mongodb:27017/workapp?replicaSet=rs0&directConnection=true"
             - name: JWT_SECRET
               value: {{ .Values.backend.env.JWT_SECRET | quote }}
             - name: FRONTEND_URL

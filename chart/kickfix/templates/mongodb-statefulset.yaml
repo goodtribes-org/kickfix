@@ -19,8 +19,20 @@ spec:
       containers:
         - name: mongodb
           image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
+          args: ["--replSet", "rs0"]
           ports:
             - containerPort: 27017
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - bash
+                  - -c
+                  - |
+                    for i in $(seq 1 30); do
+                      mongosh --eval "try { rs.status().ok } catch(e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27017' }] }) }" && break
+                      sleep 2
+                    done
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
