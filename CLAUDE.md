@@ -125,7 +125,7 @@ helm install kickfix chart/kickfix \
 | `www.kickfix.se`, `kickfix.se` | Frontend (all paths) |
 | `api.kickfix.se` | Backend (`/api/*`, `/uploads/*`) |
 
-TLS via cert-manager with `letsencrypt-prod` cluster issuer. All three domains share one TLS certificate.
+Two separate Ingress resources (frontend + backend) using Traefik ingress controller. TLS via cert-manager with `http` cluster issuer (HTTP-01 challenge). Each ingress gets its own TLS secret.
 
 ### Production environment
 

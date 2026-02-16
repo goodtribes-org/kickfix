@@ -1,22 +1,23 @@
 {{- if .Values.ingress.enabled }}
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-ingress
+  name: {{ .Release.Name }}-frontend-ingress
   annotations:
-    {{- if .Values.ingress.tls.enabled }}
-    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.clusterIssuer }}
-    {{- end }}
+    cert-manager.io/cluster-issuer: http
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure,web
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
         {{- range .Values.ingress.frontendHosts }}
         - {{ . }}
         {{- end }}
-        - {{ .Values.ingress.backendHost }}
-      secretName: {{ .Values.ingress.tls.secretName }}
+      secretName: {{ .Release.Name }}-frontend-tls
   {{- end }}
   rules:
     {{- range .Values.ingress.frontendHosts }}
@@ -31,6 +32,25 @@ spec:
                 port:
                   number: {{ $.Values.frontend.service.port }}
     {{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-backend-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: http
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    kubernetes.io/ingress.class: traefik
+    kubernetes.io/tls-acme: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure,web
+spec:
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.backendHost }}
+      secretName: {{ .Release.Name }}-backend-tls
+  {{- end }}
+  rules:
     - host: {{ .Values.ingress.backendHost }}
       http:
         paths:

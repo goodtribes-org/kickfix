@@ -117,11 +117,11 @@ helm install kickfix chart/kickfix --set backend.env.JWT_SECRET="your-secret"
 | `www.kickfix.se`, `kickfix.se` | Frontend |
 | `api.kickfix.se` | Backend (`/api/*`, `/uploads/*`) |
 
-TLS via cert-manager with `letsencrypt-prod` cluster issuer. All three domains share one certificate.
+Two separate Ingress resources (frontend + backend) using Traefik ingress controller. TLS via cert-manager with `http` cluster issuer (HTTP-01 challenge). Each ingress gets its own TLS secret.
 
 ### Infrastructure
 
 - MongoDB StatefulSet with replica set initialization via lifecycle hook
 - Backend uploads persisted on a 1Gi PVC mounted at `/app/uploads`
 - MongoDB data on a 5Gi PVC
-- NGINX ingress controller
+- Traefik ingress controller

@@ -34,12 +34,9 @@ mongodb:
 
 ingress:
   enabled: true
-  className: nginx
   frontendHosts:
     - www.kickfix.se
     - kickfix.se
   backendHost: api.kickfix.se
   tls:
     enabled: true
-    secretName: kickfix-tls
-    clusterIssuer: letsencrypt-prod
