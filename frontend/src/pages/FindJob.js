@@ -1,8 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import Navbar from "../components/Navbar";
 import JobCard from "../components/JobCard";
 import "../FindJob.css";
+
+// Fix Leaflet default icon issue with webpack
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 
 const categories = [
   { key: "", label: "Alla kategorier" },
@@ -28,6 +39,7 @@ function FindJob() {
   const [city, setCity] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [viewMode, setViewMode] = useState("list");
 
   const buildQuery = useCallback(() => {
     const params = new URLSearchParams();
@@ -60,6 +72,8 @@ function FindJob() {
     e.preventDefault();
     fetchJobs();
   }
+
+  const geoJobs = jobs.filter((job) => job.locationLat && job.locationLng);
 
   return (
     <>
@@ -124,13 +138,66 @@ function FindJob() {
             <button type="submit">Sök</button>
           </form>
 
-          {jobs.length === 0 ? (
-            <p className="no-results">Inga jobb hittades</p>
+          <div className="view-toggle">
+            <button
+              className={viewMode === "list" ? "active" : ""}
+              onClick={() => setViewMode("list")}
+            >
+              Lista
+            </button>
+            <button
+              className={viewMode === "map" ? "active" : ""}
+              onClick={() => setViewMode("map")}
+            >
+              Karta
+            </button>
+          </div>
+
+          {viewMode === "list" ? (
+            jobs.length === 0 ? (
+              <p className="no-results">Inga jobb hittades</p>
+            ) : (
+              <div className="job-grid">
+                {jobs.map((job) => (
+                  <JobCard key={job._id || job.id} job={job} onUpdate={fetchJobs} />
+                ))}
+              </div>
+            )
           ) : (
-            <div className="job-grid">
-              {jobs.map((job) => (
-                <JobCard key={job._id || job.id} job={job} onUpdate={fetchJobs} />
-              ))}
+            <div className="map-wrapper">
+              <MapContainer
+                center={[62, 15]}
+                zoom={5}
+                style={{ height: "100%", width: "100%" }}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {geoJobs.map((job) => (
+                  <Marker
+                    key={job._id || job.id}
+                    position={[job.locationLat, job.locationLng]}
+                  >
+                    <Popup>
+                      <strong>{job.title}</strong>
+                      <br />
+                      {job.price} SEK
+                      {job.locationCity && (
+                        <>
+                          <br />
+                          {job.locationCity}
+                        </>
+                      )}
+                    </Popup>
+                  </Marker>
+                ))}
+              </MapContainer>
+              {geoJobs.length === 0 && (
+                <p className="no-results map-no-results">
+                  Inga jobb med platsdata att visa på kartan
+                </p>
+              )}
             </div>
           )}
         </div>
