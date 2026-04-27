@@ -1,0 +1,94 @@
+name: Feature Request
+description: Suggest a new feature or improvement for kickfix
+title: "[Feature] "
+labels: ["feature-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a feature! Please fill in as much detail as you can.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A short, clear title for the feature you are requesting.
+      placeholder: e.g. "Add rating system for freelancers"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem does this feature solve? Who would benefit?
+      placeholder: |
+        As a [type of user], I want [goal] so that [reason].
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the feature you would like to see. Be as specific as possible.
+      placeholder: e.g. "A star rating on each job completion that is visible on the freelancer profile..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any workarounds or alternative solutions?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low — nice to have
+        - Medium — would improve my workflow
+        - High — blocking or critical
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area / Component
+      description: Which part of kickfix does this relate to?
+      options:
+        - UI / Design
+        - Job Listings
+        - Messaging
+        - Payments
+        - Authentication
+        - Notifications
+        - Search
+        - Performance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How will we know when this feature is done? List measurable conditions.
+      placeholder: |
+        - [ ] Condition one
+        - [ ] Condition two
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Screenshots, mockups, links, or any other helpful context.
+    validations:
+      required: false
