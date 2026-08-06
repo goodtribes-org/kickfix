@@ -101,6 +101,51 @@
   gap: 1.5rem;
 }
 
+.view-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  width: fit-content;
+}
+
+.view-toggle button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  transition: background 0.2s;
+}
+
+.view-toggle button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.map-wrapper {
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  position: relative;
+}
+
+.map-no-results {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
 @media (max-width: 768px) {
   .find-job-container {
     flex-direction: column;

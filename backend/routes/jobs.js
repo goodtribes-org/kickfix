@@ -100,7 +100,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
 // POST /jobs — create job (with optional image)
 router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, price, category, type, country, municipality, city } = req.body;
+    const { title, description, price, category, type, country, municipality, city, latitude, longitude } = req.body;
 
     const data = {
       title,
@@ -115,6 +115,8 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
       if (country) data.locationCountry = country;
       if (municipality) data.locationMunicipality = municipality;
       if (city) data.locationCity = city;
+      if (latitude) data.locationLat = parseFloat(latitude);
+      if (longitude) data.locationLng = parseFloat(longitude);
     }
 
     if (req.file) {

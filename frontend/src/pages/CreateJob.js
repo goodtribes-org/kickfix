@@ -33,6 +33,9 @@ function CreateJob() {
   const [city, setCity] = useState("");
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [geoStatus, setGeoStatus] = useState("");
 
   if (!user) {
     return (
@@ -50,6 +53,24 @@ function CreateJob() {
     );
   }
 
+  function handleGetLocation() {
+    if (!navigator.geolocation) {
+      setGeoStatus("Geolocation stöds inte av din webbläsare");
+      return;
+    }
+    setGeoStatus("Hämtar plats...");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        setGeoStatus("Plats hämtad!");
+      },
+      (err) => {
+        setGeoStatus("Kunde inte hämta plats: " + err.message);
+      }
+    );
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -64,6 +85,8 @@ function CreateJob() {
       formData.append("country", country);
       formData.append("municipality", municipality);
       formData.append("city", city);
+      if (latitude) formData.append("latitude", latitude);
+      if (longitude) formData.append("longitude", longitude);
     }
     if (image) {
       formData.append("image", image);
@@ -169,6 +192,11 @@ function CreateJob() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
+
+              <button type="button" className="geo-btn" onClick={handleGetLocation}>
+                Hämta min plats
+              </button>
+              {geoStatus && <span className="geo-status">{geoStatus}</span>}
             </div>
           )}
 

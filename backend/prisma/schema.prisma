@@ -31,6 +31,8 @@ model Job {
   locationCountry      String?
   locationMunicipality String?
   locationCity         String?
+  locationLat          Float?
+  locationLng          Float?
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 

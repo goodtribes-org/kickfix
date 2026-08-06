@@ -40,3 +40,6 @@ ingress:
   backendHost: api.kickfix.se
   tls:
     enabled: true
+
+imagePullSecrets:
+  - name: ghcr-pull-secret
