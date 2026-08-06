@@ -44,6 +44,36 @@ overflow `Number`.
 **`Transaction` is not migrated.** It recorded imaginary fiat — two rows written on completion
 for money that never moved. It has no meaning in a non-custodial world. `Payment` replaces it.
 
+## Decision records
+
+Architecture decisions ratified through the project board. Each corresponds to a
+`D`-numbered issue and is the authoritative record; the issue comment is a copy.
+
+### D1 — Chain and token for non-custodial payments
+
+**Decided: Base (chainId 8453), supporting native ETH and USDC.** Date: 2026-08-06.
+Issue: #2.
+
+Cents-per-transfer is the only cost profile compatible with the amounts Kickfix moves — a
+five-euro tip cannot carry a euro-denominated gas fee. Base and Optimism are equivalent in
+practice; Optimism is the fallback if Base is ever rejected. Ethereum mainnet is ruled out by
+tip economics, Polygon by a more fragmented wallet UX. Adding a second chain later is
+configuration rather than a migration, because the target schema carries `chainId` and
+`tokenAddress` per row.
+
+**Defaults for #82 (`11.2`) — the `Payment` model must use these, not re-derive them:**
+
+- `chainId Int @default(8453)` — Base mainnet
+- `tokenAddress String?` — `null` means native ETH
+- USDC on Base: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
+
+The USDC address was verified against Circle's published contract-address documentation at
+the time this record was written. Verify it again before it is used to move money.
+
+**Not decided here:** the RPC provider. On-chain verification (#83) needs one, and it will be
+a new external dependency — `backend/package.json` has no HTTP or web3 client today. That
+choice belongs to #83.
+
 ## Target Prisma schema
 
 ```prisma
