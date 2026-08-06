@@ -138,6 +138,39 @@ lifetime changes nothing.
 Secret is not wired first, the backend refuses to boot and authentication stops entirely.
 Merged is not sufficient — deployed is.
 
+### D4 — Geocoding, address to coordinates
+
+**Decided: browser geolocation plus a bundled Swedish locality dataset. Coordinates are
+stored at city precision — `Location.precision = "city"`.** Date: 2026-08-06. Issue: #5.
+
+No external service, no per-request cost, no usage-policy problem. Kickfix is Sweden-only
+today, and SCB's tätorter list is roughly 2 000 entries — as `name,municipality,lat,lng` that
+is tens of kilobytes, cheap to ship in the backend image and look up in memory. Nominatim's
+policy forbids heavy automated use; Mapbox and Google add an API key, a per-request cost and
+a new external dependency. Revisit only if the product goes beyond Sweden.
+
+This ratifies an existing schema default rather than introducing one: `Location.precision`
+already defaults to `"city"` in the target schema below.
+
+**On a miss** — a typed locality not in the dataset: **store null coordinates and accept that
+the job does not appear on the map.** Rejecting the input would block job creation for anyone
+in a locality the dataset happens to omit, which is worse than absence from one view; the job
+remains findable through text and filters. The consequence is not allowed to be silent — the
+creation form must tell the user their job will not show on the map, or this becomes a bug
+someone reports a year later.
+
+**Carry into #73 (`9.1`):**
+
+- create `backend/lib/geo.js` exposing a city → coordinate lookup against the bundled dataset
+- **snap or round the browser-geolocation result before it is sent.**
+  `frontend/src/pages/CreateJob.js:64` currently stores `position.coords.latitude` verbatim —
+  full device precision, which on a phone is the user's doorstep. That defeats the centroid
+  design for exactly the users who press the button. Tracked separately as its own issue,
+  because it is a privacy fix to already-shipped code and does not depend on #73 being worked.
+
+Note the interaction with #35, which reshapes `CreateJob`'s location inputs — whatever field
+set #35 settles determines what #73's lookup receives.
+
 ## Target Prisma schema
 
 ```prisma
