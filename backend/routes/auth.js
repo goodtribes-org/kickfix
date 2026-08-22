@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const prisma = require("../lib/prismaClient");
 const authMiddleware = require("../middleware/auth");
+const { JWT_SECRET } = require("../lib/config");
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "workapp_secret_key_2024";
 
 function generateToken(user) {
   return jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: "7d" });

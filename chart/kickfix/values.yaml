@@ -16,9 +16,18 @@ backend:
   service:
     port: 5000
   env:
-    JWT_SECRET: ""
     FRONTEND_URL: "https://www.kickfix.se,https://kickfix.se"
     PORT: "5000"
+    NODE_ENV: "production"
+  # JWT_SECRET lives in a Kubernetes Secret, never in this file or the rendered
+  # manifest. The Secret is created out-of-band (see chart/kickfix/README.md);
+  # ArgoCD does not manage it, so a sync can never overwrite or prune it.
+  secret:
+    name: kickfix-backend-secrets
+    # Leave false in GitOps. Only flip it for a `helm install` that should
+    # create the Secret itself, and then pass --set backend.secret.jwtSecret=...
+    create: false
+    jwtSecret: ""
   uploads:
     size: 1Gi
 
