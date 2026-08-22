@@ -6,6 +6,11 @@ metadata:
     app: {{ .Release.Name }}-backend
 spec:
   replicas: {{ .Values.backend.replicaCount }}
+  # The uploads PVC is ReadWriteOnce. A RollingUpdate starts the replacement pod
+  # before the old one releases the volume, which deadlocks the rollout whenever
+  # the two land on different nodes. Recreate frees the volume first.
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ .Release.Name }}-backend
@@ -27,11 +32,16 @@ spec:
             - name: DATABASE_URL
               value: "mongodb://{{ .Release.Name }}-mongodb:27017/workapp?replicaSet=rs0&directConnection=true"
             - name: JWT_SECRET
-              value: {{ .Values.backend.env.JWT_SECRET | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secret.name }}
+                  key: JWT_SECRET
             - name: FRONTEND_URL
               value: {{ .Values.backend.env.FRONTEND_URL | quote }}
             - name: PORT
               value: {{ .Values.backend.env.PORT | quote }}
+            - name: NODE_ENV
+              value: {{ .Values.backend.env.NODE_ENV | quote }}
           volumeMounts:
             - name: uploads
               mountPath: /app/uploads
