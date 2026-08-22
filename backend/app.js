@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 
 const authRoutes = require("./routes/auth");
+const healthRoutes = require("./routes/health");
 const jobRoutes = require("./routes/jobs");
 const messageRoutes = require("./routes/messages");
 const paymentRoutes = require("./routes/payments");
@@ -18,6 +19,7 @@ app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/messages", messageRoutes);
