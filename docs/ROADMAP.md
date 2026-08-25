@@ -74,6 +74,33 @@ the time this record was written. Verify it again before it is used to move mone
 a new external dependency — `backend/package.json` has no HTTP or web3 client today. That
 choice belongs to #83.
 
+### D2 — Storage for user-uploaded images
+
+**Decided: S3-compatible object storage (Cloudflare R2 or Backblaze B2), with the backend
+issuing presigned upload URLs.** Date: 2026-08-06. Issue: #3.
+
+The current ReadWriteOnce PVC caps the backend at one replica permanently, holds every
+avatar, help-request photo and product image on a single node's disk with no backup, and has
+a 1 Gi ceiling. R2 and B2 both charge no egress fees, which matters for an image-heavy map
+UI. Presigned uploads keep image bytes off the API path entirely. The rejected alternative —
+a ReadWriteMany PVC — is a chart-only change, but it keeps images on cluster storage with
+still no backup and depends on an RWX storage class that ops would have to confirm exists.
+
+**Provider not yet selected between R2 and B2** — either satisfies the decision; the
+follow-up implementation issue picks one. Choosing here, without pricing or account context,
+would be a guess presented as a decision.
+
+**Consequences to carry into the implementation issue:**
+
+- `Job.image` stores a bare filename (`routes/jobs.js:123`), so this is a **data migration**,
+  not a code swap — every existing row's value must stay resolvable.
+- Bucket credentials are a Kubernetes Secret and therefore an **ops task**; the developer has
+  no cluster access.
+- The uploads PVC and its volume mount can only be removed **after** a backfill.
+- In-process rate limiting (#18) is correct today only because `replicaCount` is 1. Removing
+  the storage constraint makes multi-replica possible, at which point those limits silently
+  become N times looser. See #47.
+
 ## Target Prisma schema
 
 ```prisma
