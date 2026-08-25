@@ -101,6 +101,43 @@ would be a guess presented as a decision.
   the storage constraint makes multi-replica possible, at which point those limits silently
   become N times looser. See #47.
 
+### D3 — Session model
+
+**Decided: short-lived access token now; rotating refresh token in an httpOnly cookie as a
+later epic.** Date: 2026-08-06. Issue: #4.
+
+The httpOnly-cookie design is correct but cross-cutting — it touches CORS credentials, the
+whole frontend auth layer and every authenticated request path. Splitting it lets the
+stolen-token window drop from seven days to minutes immediately, contained to two backend
+files, without blocking phase 1 behind a frontend epic.
+
+**Phase 1, now:**
+
+- access-token lifetime reduced from `7d` (`routes/auth.js:11`) to minutes — the exact value
+  is chosen and justified by #13, not fixed here
+- hardcoded `JWT_SECRET` fallback removed — #12 (`1.1`) then #13 (`1.2`)
+
+**Later epic, not yet phased:**
+
+- rotating refresh token in an httpOnly cookie
+- `AuthToken` model — present in the target schema below, not yet in `backend/prisma/schema.prisma`
+- `cors({ credentials: true })` — `backend/index.js:15` does not set it today, so cookies
+  would not be sent at all
+- `AuthContext.js` and `apiFetch` (`utils/api.js`) reworked for cookie auth plus
+  401-triggered silent refresh — related to #31 and #32
+- revocable logout; `POST /logout` (`routes/auth.js:75`) is a literal no-op today
+
+**Prerequisites regardless of which model is chosen: #12 and #13.** No session design is
+sound while `JWT_SECRET` has a hardcoded fallback committed to this repository —
+`middleware/auth.js:3` and `routes/auth.js:8` both fall back to `"workapp_secret_key_2024"`,
+and `chart/kickfix/values.yaml` ships `backend.env.JWT_SECRET: ""`, which is falsy. Until
+that is fixed, tokens are forgeable by anyone who can read the repo, and shortening their
+lifetime changes nothing.
+
+**Ordering: #12 must land and be *deployed* before #13.** #13 removes the fallback; if the
+Secret is not wired first, the backend refuses to boot and authentication stops entirely.
+Merged is not sufficient — deployed is.
+
 ## Target Prisma schema
 
 ```prisma
