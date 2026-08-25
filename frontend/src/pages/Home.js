@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import FollowUpBox from "../components/FollowUpBox";
 import "../Home.css";
 
 const categories = [
@@ -54,6 +55,7 @@ function Home() {
             <h3>Få betalt</h3>
             <p>Slutför uppdraget och få betalning säkert via plattformen</p>
           </div>
+          <FollowUpBox />
         </div>
 
         <h2 className="section-title">Jobbkategorier</h2>
