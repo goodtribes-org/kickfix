@@ -24,7 +24,7 @@ function Home() {
       <Navbar />
 
       <div className="hero">
-        <h1>Välkommen till WorkApp</h1>
+        <h1>Välkommen till kickfix</h1>
         <p>Din marknadsplats för jobb och tjänster</p>
         <div className="hero-buttons">
           <button className="btn-primary" onClick={() => navigate("/hitta-jobb")}>
