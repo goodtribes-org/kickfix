@@ -91,15 +91,15 @@ npx prisma studio          # Open Prisma Studio GUI
 Two GitHub Actions workflows:
 
 1. **Docker Image Publish** (`.github/workflows/docker-build.yml`):
-   - Triggers on push to `main` and version tags (`v*`)
+   - Triggers on push to `main`, version tags (`v*`), and `pull_request` to `main` (PR builds are not pushed)
    - Builds `frontend` and `backend` images in parallel (matrix strategy)
-   - Pushes to `ghcr.io/viodlar/kickfix/{frontend,backend}:<commit-sha>`
-   - Runs on `arc-runner-set-viodlar`
+   - Pushes to `ghcr.io/goodtribes-org/kickfix/{frontend,backend}:<commit-sha>`
+   - Runs on `ubuntu-latest`
 
 2. **Deploy To Production** (`.github/workflows/deploy.yaml`):
    - Triggers after Docker Image Publish completes
    - Renders Helm templates with commit SHA image tags
-   - Commits generated manifests to `viodlar/manifest` repo (GitOps)
+   - Commits generated manifests to the `goodtribes-org/deploy` repo, checked out locally at `manifest/` in the workflow (GitOps; `manifest` is a checkout path, not a repo name)
    - Sends Slack notification
 
 ## Helm deployment
