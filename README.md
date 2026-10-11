@@ -97,10 +97,10 @@ npm start
 
 Two GitHub Actions workflows in `.github/workflows/`:
 
-1. **Docker Image Publish** (`docker-build.yml`) — triggers on push to `main` or version tags (`v*`). Builds `frontend` and `backend` images in parallel and pushes to `ghcr.io`.
-2. **Deploy To Production** (`deploy.yaml`) — triggers after image publish completes. Renders Helm templates with the commit SHA as image tag and commits the generated manifests to the `viodlar/manifest` repo (GitOps pattern). A cluster-side controller picks up the changes.
+1. **Docker Image Publish** (`docker-build.yml`) — triggers on push to `main`, version tags (`v*`), or `pull_request` against `main` (on PRs it builds without pushing; images only publish on push/tag events). Builds `frontend` and `backend` images in parallel and pushes to `ghcr.io`.
+2. **Deploy To Production** (`deploy.yaml`) — triggers after image publish completes. Renders Helm templates with the commit SHA as image tag and commits the generated manifests to the `goodtribes-org/deploy` repo (GitOps pattern; `manifest/` in the workflow is the local checkout path of that repo, not a repo name). A cluster-side controller picks up the changes.
 
-Images: `ghcr.io/viodlar/kickfix/frontend:<sha>` and `ghcr.io/viodlar/kickfix/backend:<sha>`
+Images: `ghcr.io/goodtribes-org/kickfix/frontend:<sha>` and `ghcr.io/goodtribes-org/kickfix/backend:<sha>`
 
 ### Helm chart
 
